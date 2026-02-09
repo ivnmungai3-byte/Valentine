@@ -2,12 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>💖 Be My Valentine</title>
 <style>
-    * {
-        box-sizing: border-box;
-        font-family: 'Comic Sans MS', cursive;
-    }
+    * { box-sizing: border-box; font-family: 'Comic Sans MS', cursive; }
 
     body {
         margin: 0;
@@ -27,67 +25,60 @@
         animation: float 6s linear infinite;
         opacity: 0.8;
     }
-
     @keyframes float {
-        0% {
-            transform: translateY(100vh) scale(0.5);
-            opacity: 1;
-        }
-        100% {
-            transform: translateY(-10vh) scale(1.2);
-            opacity: 0;
-        }
-   .envelope {
-    width: 260px;
-    height: 180px;
-    background: #fdfdfd;
-    border-radius: 10px;
-    position: relative;
-    cursor: pointer;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
+        0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
+        100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
 
-.flap {
-    width: 260px;
-    height: 100px;
-    background: pink;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform-origin: top center;
-    transition: transform 1s ease;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
+    /* Envelope */
+    .envelope {
+        width: 260px;
+        height: 180px;
+        background: #fdfdfd;
+        border-radius: 10px;
+        position: relative;
+        cursor: pointer;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
 
-.flap.open {
-    transform: rotateX(-180deg);
-}
+    .flap {
+        width: 260px;
+        height: 100px;
+        background: pink;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform-origin: top center;
+        transition: transform 1s ease;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+    .flap.open {
+        transform: rotateX(-180deg);
+    }
 
-.seal {
-    width: 60px;
-    height: 60px;
-    background: crimson;
-    border-radius: 50%;
-    position: absolute;
-    top: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: pink;
-    font-size: 24px;
-    transition: transform 0.6s, opacity 0.6s;
-}
-
-.seal.break {
-    transform: scale(0);
-    opacity: 0;
-}
-
+    .seal {
+        width: 60px;
+        height: 60px;
+        background: crimson;
+        border-radius: 50%;
+        position: absolute;
+        top: 70px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: pink;
+        font-size: 24px;
+        transition: transform 0.6s, opacity 0.6s;
+    }
+    .seal.break {
+        transform: scale(0);
+        opacity: 0;
+    }
 
     /* Letter */
     .letter {
@@ -101,22 +92,18 @@
         display: none;
         animation: pop 0.8s ease;
     }
-
     @keyframes pop {
         from { transform: scale(0); }
         to { transform: scale(1); }
     }
 
-    h1 {
-        color: crimson;
-    }
+    h1 { color: crimson; }
 
     .buttons {
         margin-top: 20px;
         position: relative;
         height: 80px;
     }
-
     button {
         padding: 12px 25px;
         font-size: 16px;
@@ -125,13 +112,11 @@
         cursor: pointer;
         position: absolute;
     }
-
     .yes {
         background: green;
         color: white;
         left: 30px;
     }
-
     .no {
         background: red;
         color: white;
@@ -141,11 +126,13 @@
 </head>
 <body>
 
+<!-- Envelope -->
 <div class="envelope" id="envelope">
     <div class="flap" id="flap"></div>
     <div class="seal" id="seal">❤</div>
 </div>
 
+<!-- Letter -->
 <div class="letter" id="letter">
     <h1>Will you be my Valentine? 💘</h1>
     <div class="buttons">
@@ -155,7 +142,7 @@
 </div>
 
 <script>
-    // Hearts generator
+    // Floating hearts
     setInterval(() => {
         const heart = document.createElement("div");
         heart.className = "heart";
@@ -163,32 +150,25 @@
         heart.style.left = Math.random() * 100 + "vw";
         heart.style.fontSize = (15 + Math.random() * 25) + "px";
         document.body.appendChild(heart);
-
         setTimeout(() => heart.remove(), 6000);
     }, 300);
 
-    // Envelope click
-   const envelope = document.getElementById("envelope");
-const flap = document.getElementById("flap");
-const seal = document.getElementById("seal");
-const letter = document.getElementById("letter");
+    // Envelope click animation
+    const envelope = document.getElementById("envelope");
+    const flap = document.getElementById("flap");
+    const seal = document.getElementById("seal");
+    const letter = document.getElementById("letter");
 
-envelope.addEventListener("click", () => {
-    // Open the flap
-    flap.classList.add("open");
-    // Break the seal after flap opens
-    setTimeout(() => {
-        seal.classList.add("break");
-    }, 800);
-    // Show the letter after seal breaks
-    setTimeout(() => {
-        envelope.style.display = "none";
-        letter.style.display = "block";
-    }, 1500);
-});
+    envelope.addEventListener("click", () => {
+        flap.classList.add("open");
+        setTimeout(() => seal.classList.add("break"), 800);
+        setTimeout(() => {
+            envelope.style.display = "none";
+            letter.style.display = "block";
+        }, 1500);
+    });
 
-
-    // Runaway No button
+    // Runaway "No" button
     const noBtn = document.getElementById("noBtn");
     noBtn.addEventListener("mouseenter", () => {
         const x = Math.random() * 200;
@@ -196,8 +176,9 @@ envelope.addEventListener("click", () => {
         noBtn.style.transform = `translate(${x}px, ${y}px)`;
     });
 
+    // Yes button click
     function yesClicked() {
-        document.getElementById("letter").innerHTML = `
+        letter.innerHTML = `
             <h1>YAY!!! 💖💖💖</h1>
             <p>You just made me the happiest person ever 😍</p>
         `;
